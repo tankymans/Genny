@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>$BOTTOM — Generational Bottom</title>
+<meta name="description" content="The market bottomed. So did she. $BOTTOM — the generational bottom is in." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#120b11;
+    --ink-2:#1a0f17;
+    --panel:#22141d;
+    --line:#3a2330;
+    --peach:#ff9e7d;
+    --peach-deep:#ff744f;
+    --blush:#ffd6c2;
+    --green:#3ddc84;
+    --red:#ff4d5e;
+    --bone:#f6ece8;
+    --muted:#b89aa6;
+
+    --display:'Bricolage Grotesque',sans-serif;
+    --body:'Space Grotesk',sans-serif;
+    --mono:'Space Mono',monospace;
+
+    --maxw:1140px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(255,116,79,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 30%, rgba(255,158,125,.08), transparent 60%),
+      var(--ink);
+    color:var(--bone);
+    font-family:var(--body);
+    line-height:1.55;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(12px);
+    background:rgba(18,11,17,.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{display:flex;align-items:center;gap:18px;height:66px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .brand .pmark{width:26px;height:26px}
+  .nav-spacer{flex:1}
+  .nav-links{display:flex;gap:24px;font-size:14px;color:var(--muted)}
+  .nav-links a:hover{color:var(--bone)}
+  .ca-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:12px;
+    background:var(--ink-2);border:1px solid var(--line);
+    padding:7px 12px;border-radius:999px;color:var(--blush);cursor:pointer;
+    transition:border-color .2s,transform .1s;
+  }
+  .ca-pill:hover{border-color:var(--peach-deep)}
+  .ca-pill:active{transform:scale(.97)}
+  .ca-pill .copied{color:var(--green)}
+  .btn{
+    font-family:var(--display);font-weight:700;font-size:15px;
+    background:linear-gradient(180deg,var(--peach),var(--peach-deep));
+    color:#2a0f08;border:none;border-radius:999px;
+    padding:11px 20px;cursor:pointer;
+    box-shadow:0 8px 24px rgba(255,116,79,.3);
+    transition:transform .12s, box-shadow .2s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,116,79,.45)}
+  .btn:active{transform:translateY(0)}
+
+  @media(max-width:780px){ .nav-links{display:none} }
+
+  /* ---------- hero ---------- */
+  header.hero{position:relative;padding:64px 0 36px;overflow:hidden}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--peach);border:1px solid var(--line);background:var(--ink-2);
+    padding:6px 13px;border-radius:999px;margin-bottom:26px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+  h1.headline{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(48px,9vw,118px);line-height:.92;letter-spacing:-.04em;
+    margin-bottom:22px;
+  }
+  h1.headline .em{
+    background:linear-gradient(180deg,var(--blush),var(--peach-deep));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{font-size:clamp(17px,2.4vw,22px);color:var(--muted);max-width:560px;margin-bottom:30px}
+  .sub b{color:var(--bone);font-weight:500}
+  .hero-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .ticker-tag{
+    font-family:var(--mono);font-weight:700;font-size:15px;color:var(--peach);
+    border:1px dashed var(--peach-deep);padding:11px 16px;border-radius:12px;
+  }
+  .hero-peach{
+    position:absolute;right:-30px;top:30px;width:min(46vw,440px);
+    pointer-events:none;opacity:.96;
+    animation:bob 6s ease-in-out infinite;
+  }
+  @media(max-width:900px){ .hero-peach{position:relative;right:auto;top:auto;width:min(70vw,320px);margin:30px auto -10px;display:block} header.hero{padding-top:40px} }
+
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
+
+  /* ---------- marquee ---------- */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink-2);overflow:hidden;padding:13px 0}
+  .marquee-track{display:flex;gap:42px;white-space:nowrap;font-family:var(--display);font-weight:700;font-size:18px;color:var(--peach);animation:scroll 22s linear infinite}
+  .marquee-track span{opacity:.85}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* ---------- chart ---------- */
+  section{padding:78px 0}
+  .sec-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--peach-deep);margin-bottom:14px}
+  h2{font-family:var(--display);font-weight:800;font-size:clamp(30px,5vw,52px);letter-spacing:-.03em;line-height:1.02;margin-bottom:14px}
+  .lead{color:var(--muted);max-width:620px;font-size:18px;margin-bottom:36px}
+
+  .chart-stage{position:relative;margin-top:60px}
+  .peach-marker{
+    position:absolute;z-index:3;left:50%;top:-78px;transform:translateX(-50%);
+    text-align:center;pointer-events:none;animation:bob 5.5s ease-in-out infinite;
+  }
+  .peach-marker svg{width:104px;height:104px;filter:drop-shadow(0 14px 26px rgba(255,116,79,.35))}
+  .peach-marker .tag{
+    display:inline-block;margin-top:2px;font-family:var(--mono);font-size:12px;font-weight:700;
+    color:#2a0f08;background:var(--peach);padding:4px 11px;border-radius:999px;
+  }
+  .peach-marker .stem-line{display:block;width:2px;height:26px;margin:4px auto 0;background:linear-gradient(var(--peach-deep),transparent)}
+  .chart-card{
+    border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    background:var(--panel);box-shadow:0 30px 80px rgba(0,0,0,.5);
+    height:520px;
+  }
+  .chart-card .tradingview-widget-container,
+  .chart-card .tradingview-widget-container__widget{height:100%;width:100%}
+  .chart-caption{display:flex;gap:14px;align-items:flex-start;margin-top:22px;color:var(--muted);font-size:15px}
+  .chart-caption .big{font-size:26px;line-height:1}
+  @media(max-width:900px){ .chart-card{height:420px} .peach-marker svg{width:84px;height:84px} .peach-marker{top:-64px} }
+
+  /* ---------- thesis ---------- */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){ .grid3{grid-template-columns:1fr} }
+  .card{
+    border:1px solid var(--line);background:var(--ink-2);border-radius:16px;padding:26px;
+    transition:transform .18s, border-color .18s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--peach-deep)}
+  .card .pico{font-size:34px;margin-bottom:14px;display:block}
+  .card h3{font-family:var(--display);font-weight:700;font-size:21px;margin-bottom:8px;letter-spacing:-.01em}
+  .card p{color:var(--muted);font-size:15px}
+
+  /* ---------- tokenomics / buy ---------- */
+  .split{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+  @media(max-width:860px){ .split{grid-template-columns:1fr;gap:30px} }
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+  .stat-row:last-child{border-bottom:none}
+  .stat-row .k{color:var(--muted);font-size:15px}
+  .stat-row .v{font-family:var(--mono);font-weight:700;color:var(--peach)}
+  .buy-box{border:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--ink-2));border-radius:18px;padding:30px}
+  .buy-box h3{font-family:var(--display);font-weight:800;font-size:24px;margin-bottom:6px}
+  .buy-box ol{list-style:none;counter-reset:step;margin:20px 0}
+  .buy-box li{counter-increment:step;display:flex;gap:13px;align-items:flex-start;padding:9px 0;color:var(--muted);font-size:15px}
+  .buy-box li::before{
+    content:counter(step);flex:0 0 auto;width:26px;height:26px;border-radius:50%;
+    background:var(--peach);color:#2a0f08;font-family:var(--mono);font-weight:700;font-size:13px;
+    display:grid;place-items:center;
+  }
+  .buy-box .btn{width:100%;margin-top:8px;padding:14px}
+
+  .ca-full{
+    margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--blush);
+    background:var(--ink);border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;word-break:break-all;display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;
+  }
+  .ca-full:hover{border-color:var(--peach-deep)}
+  .ca-full small{color:var(--muted);flex:0 0 auto}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:46px 0 60px;background:var(--ink-2)}
+  .foot-in{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .foot-links{display:flex;gap:22px;color:var(--muted);font-size:15px}
+  .foot-links a:hover{color:var(--peach)}
+  .disclaimer{color:#6e5560;font-size:12px;margin-top:22px;max-width:640px;font-family:var(--mono);line-height:1.7}
+
+  /* entrance */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+  :focus-visible{outline:2px solid var(--peach);outline-offset:3px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- reusable peach mark -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="peachGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffc7ac"/>
+      <stop offset="55%" stop-color="#ff9e7d"/>
+      <stop offset="100%" stop-color="#ff744f"/>
+    </linearGradient>
+    <linearGradient id="peachGradBig" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#ffd9c4"/>
+      <stop offset="50%" stop-color="#ff9e7d"/>
+      <stop offset="100%" stop-color="#ff6a45"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <svg class="pmark" viewBox="0 0 120 120" aria-hidden="true">
+        <path d="M62 26 C 70 12, 90 12, 96 18 C 90 30, 74 30, 64 27 Z" fill="#3ddc84"/>
+        <path d="M60 28 C 32 28, 16 49, 16 71 C 16 97, 37 115, 60 115 C 83 115, 104 97, 104 71 C 104 49, 88 28, 60 28 Z" fill="url(#peachGrad)"/>
+        <path d="M60 34 C 53 54, 53 92, 60 109" stroke="#d65232" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
+      </svg>
+      $BOTTOM
+    </a>
+    <div class="nav-spacer"></div>
+    <div class="nav-links">
+      <a href="#chart">Chart</a>
+      <a href="#thesis">Thesis</a>
+      <a href="#buy">How to buy</a>
+    </div>
+    <button class="ca-pill" id="navCa" aria-label="Copy contract address">
+      <span class="label">CA: SOON…pumpFUN</span>
+    </button>
+    <a class="btn" href="#buy">Buy the bottom</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> Bear market certified · bottom is in</span>
+    <h1 class="headline">GENERATIONAL<br><span class="em">BOTTOM</span></h1>
+    <p class="sub">The charts dumped. Everyone capitulated. And right at the lowest point, the market gave us <b>the cleanest bottom of the cycle.</b> Two of them, actually. 🍑</p>
+    <div class="hero-cta">
+      <a class="btn" href="#buy">Buy $BOTTOM</a>
+      <span class="ticker-tag">$BOTTOM · Solana</span>
+    </div>
+  </div>
+
+  <svg class="hero-peach" viewBox="0 0 120 130" aria-hidden="true">
+    <path d="M63 28 C 72 10, 96 10, 103 17 C 96 32, 77 32, 65 29 Z" fill="#3ddc84"/>
+    <path d="M64 29 C 64 18, 68 11, 74 8" stroke="#7a4a1f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M60 30 C 28 30, 10 54, 10 79 C 10 108, 33 128, 60 128 C 87 128, 110 108, 110 79 C 110 54, 92 30, 60 30 Z" fill="url(#peachGradBig)"/>
+    <path d="M60 37 C 52 60, 52 103, 60 122" stroke="#cf4a2a" stroke-width="3.5" fill="none" opacity=".5" stroke-linecap="round"/>
+    <ellipse cx="38" cy="64" rx="13" ry="18" fill="#fff" opacity=".22"/>
+  </svg>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>🍑 BUY THE BOTTOM</span><span>· GENERATIONAL BOTTOM ·</span><span>$BOTTOM</span><span>· SHE BOTTOMED ·</span><span>· MAXIMUM PAIN = MAXIMUM GAIN ·</span><span>🍑 BUY THE BOTTOM</span><span>· GENERATIONAL BOTTOM ·</span><span>$BOTTOM</span><span>· SHE BOTTOMED ·</span><span>· MAXIMUM PAIN = MAXIMUM GAIN ·</span>
+  </div>
+</div>
+
+<!-- CHART -->
+<section id="chart">
+  <div class="wrap reveal">
+    <div class="sec-eyebrow">Exhibit A · the bottom in question</div>
+    <h2>You are here.</h2>
+    <p class="lead">Live Solana chart, straight from TradingView. Follow the red candles all the way down to where the smart money buys — the generational bottom. (The other bottom is sitting right on top of it.)</p>
+
+    <div class="chart-stage">
+      <div class="peach-marker">
+        <svg viewBox="0 0 120 130" aria-hidden="true">
+          <path d="M63 28 C 72 10, 96 10, 103 17 C 96 32, 77 32, 65 29 Z" fill="#3ddc84"/>
+          <path d="M60 30 C 28 30, 10 54, 10 79 C 10 108, 33 128, 60 128 C 87 128, 110 108, 110 79 C 110 54, 92 30, 60 30 Z" fill="url(#peachGradBig)"/>
+          <path d="M60 37 C 52 60, 52 103, 60 122" stroke="#cf4a2a" stroke-width="3.5" fill="none" opacity=".5" stroke-linecap="round"/>
+        </svg>
+        <span class="tag">you are here 🍑</span>
+        <span class="stem-line"></span>
+      </div>
+
+      <div class="chart-card">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+          {
+            "autosize": true,
+            "symbol": "BINANCE:SOLUSDT",
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "hide_side_toolbar": true,
+            "allow_symbol_change": true,
+            "save_image": false,
+            "backgroundColor": "rgba(34, 20, 29, 1)",
+            "gridColor": "rgba(58, 35, 48, 0.5)",
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
+        </div>
+      </div>
+
+      <div class="chart-caption">
+        <span class="big">🍑</span>
+        <span>Two bottoms, one chart. One marks the end of the bear market, the other one just looks good. Not financial advice — but you already knew which one you were looking at.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section id="thesis" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap reveal">
+    <div class="sec-eyebrow">The thesis</div>
+    <h2>Why this is the bottom</h2>
+    <p class="lead">Peak fear. Peak cope. Peak "it's so over." Historically that exact feeling is the buy signal. $BOTTOM is the meme for the part of the cycle nobody has the stomach for.</p>
+    <div class="grid3">
+      <div class="card">
+        <span class="pico">📉</span>
+        <h3>Maximum pain</h3>
+        <p>Everyone who could sell already sold. When the timeline goes quiet and the influencers disappear, the floor is usually right under your feet.</p>
+      </div>
+      <div class="card">
+        <span class="pico">🍑</span>
+        <h3>It's a clean bottom</h3>
+        <p>Generational lows don't ask twice. You either bend down and pick it up here, or you explain to your kids why you didn't.</p>
+      </div>
+      <div class="card">
+        <span class="pico">🚀</span>
+        <h3>Only up from here</h3>
+        <p>From a real bottom there's exactly one direction left. $BOTTOM is a bet that the worst is behind us — and the bounce is in front.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUY / TOKENOMICS -->
+<section id="buy">
+  <div class="wrap reveal">
+    <div class="split">
+      <div>
+        <div class="sec-eyebrow">Tokenomics</div>
+        <h2>Built bottom-up</h2>
+        <p class="lead">No team allocation drama, no presale games. Just a fair launch on pump.fun for everyone bottom-feeding at the lows.</p>
+        <div class="stat-row"><span class="k">Ticker</span><span class="v">$BOTTOM</span></div>
+        <div class="stat-row"><span class="k">Chain</span><span class="v">Solana</span></div>
+        <div class="stat-row"><span class="k">Total supply</span><span class="v">1,000,000,000</span></div>
+        <div class="stat-row"><span class="k">Tax</span><span class="v">0 / 0</span></div>
+        <div class="stat-row"><span class="k">LP</span><span class="v">Burned 🔥</span></div>
+        <div class="stat-row"><span class="k">Launch</span><span class="v">pump.fun · fair</span></div>
+      </div>
+
+      <div class="buy-box">
+        <h3>How to buy the bottom</h3>
+        <p style="color:var(--muted);font-size:15px">Four steps. Then you're early for once.</p>
+        <ol>
+          <li>Grab a Solana wallet (Phantom) and load some SOL.</li>
+          <li>Copy the contract address below.</li>
+          <li>Paste it into pump.fun and swap your SOL for $BOTTOM.</li>
+          <li>Hold through the bounce. Tell everyone you were here.</li>
+        </ol>
+        <div class="ca-full" id="caFull">
+          <span id="caText">SOON…replace_with_real_CA</span>
+          <small id="caHint">tap to copy</small>
+        </div>
+        <a class="btn" href="#" id="pumpLink" target="_blank" rel="noopener">Buy on pump.fun 🍑</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-in">
+      <a class="brand" href="#top">
+        <svg class="pmark" viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 28 C 32 28, 16 49, 16 71 C 16 97, 37 115, 60 115 C 83 115, 104 97, 104 71 C 104 49, 88 28, 60 28 Z" fill="url(#peachGrad)"/>
+          <path d="M60 34 C 53 54, 53 92, 60 109" stroke="#d65232" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
+        </svg>
+        $BOTTOM
+      </a>
+      <div class="foot-links">
+        <a href="#" id="xLink" target="_blank" rel="noopener">X / Twitter</a>
+        <a href="#" target="_blank" rel="noopener">Telegram</a>
+        <a href="#" id="pumpLink2" target="_blank" rel="noopener">pump.fun</a>
+        <a href="#chart">Chart</a>
+      </div>
+    </div>
+    <p class="disclaimer">$BOTTOM is a meme coin with no intrinsic value and no expectation of financial return. It exists for entertainment only. Crypto is extremely volatile — there is no guarantee the bottom is in. Nothing here is financial advice. Do your own research and never invest more than you can afford to lose.</p>
+  </div>
+</footer>
+
+<script>
+  // ---- copy contract address ----
+  const CA = "SOON…replace_with_real_CA";
+  function copyCA(displayEl, hintEl){
+    navigator.clipboard.writeText(CA).then(()=>{
+      const prev = hintEl ? hintEl.textContent : null;
+      if(hintEl){ hintEl.textContent = "copied ✓"; hintEl.classList.add("copied"); }
+      setTimeout(()=>{ if(hintEl){ hintEl.textContent = prev; hintEl.classList.remove("copied"); } }, 1400);
+    }).catch(()=>{});
+  }
+  document.getElementById('navCa').addEventListener('click', function(){
+    const lbl = this.querySelector('.label');
+    navigator.clipboard.writeText(CA).then(()=>{
+      const t = lbl.textContent; lbl.textContent = "copied ✓"; lbl.classList.add("copied");
+      setTimeout(()=>{ lbl.textContent = t; lbl.classList.remove("copied"); }, 1400);
+    });
+  });
+  const caFull = document.getElementById('caFull');
+  caFull.addEventListener('click', ()=> copyCA(document.getElementById('caText'), document.getElementById('caHint')));
+
+  // ---- reveal on scroll ----
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
